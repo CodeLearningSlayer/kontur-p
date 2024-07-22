@@ -6,12 +6,8 @@ body {
   position: relative;
   color: white;
   height: 100vh;
-  background: linear-gradient(
-    200.96deg,
-    #fedc2a -29.09%,
-    #dd5789 51.77%,
-    #7a2c9e 129.35%
-  );
+  background-image: url("../../assets/images/background.jpeg");
+  background-size: cover;
   font-family: sans-serif;
   overflow-y: hidden;
   display: flex;
@@ -31,11 +27,6 @@ button {
   transition: all ease-in 0.1s;
   cursor: pointer;
   opacity: 0.9;
-}
-
-button:hover {
-  transform: scale(1.05);
-  opacity: 1;
 }
 
 li {
