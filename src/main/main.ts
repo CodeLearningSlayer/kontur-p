@@ -1,15 +1,6 @@
 /* eslint global-require: off, no-console: off, promise/always-return: off */
-
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `npm run build` or `npm run build:main`, this file is compiled to
- * `./src/main.js` using webpack. This gives us some performance wins.
- */
 import path from 'path';
-import { app, BrowserWindow, shell, ipcMain } from 'electron';
+import { app, BrowserWindow, shell, ipcMain, screen } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
@@ -71,15 +62,27 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 450,
+    height: 550,
     icon: getAssetPath('icon.png'),
+    resizable: false,
     webPreferences: {
       preload: app.isPackaged
         ? path.join(__dirname, 'preload.js')
         : path.join(__dirname, '../../.erb/dll/preload.js'),
     },
   });
+
+  ipcMain.on('resize-window', (event, args) => {
+    mainWindow?.setSize(args[0], args[1]);
+    const screenHeight = screen.getPrimaryDisplay().bounds.height;
+    const screenWidth = screen.getPrimaryDisplay().bounds.width;
+    const { width: windowWidth, height: windowHeight } = mainWindow?.getBounds()
+
+    const x = Math.round((screenWidth - windowWidth) / 2);
+    const y = Math.round((screenHeight - windowHeight) / 2);
+    mainWindow?.setPosition(x, y)
+  })
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -112,9 +115,39 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-/**
- * Add event listeners...
- */
+function createDbConnection() {
+  const sqlite3 = require('sqlite3').verbose();
+  const path = require('path');
+
+  let dbPath = path.join(__dirname, 'main_sql.db');
+
+  let db = new sqlite3.Database(dbPath, (err) => {
+    if (err) {
+      console.error(err.message);
+    }
+  });
+  db.serialize(() => {
+    db.run(`
+        create table if not exists users (
+          id integer primary key autoincrement,
+          name text unique not null,
+          course integer not null,
+          troop integer not null
+        )
+    `);
+  });
+  return db
+}
+
+ipcMain.on('sql-insert', (event, args) => {
+  const sql = 'insert into users(name, course, troop) values (?, ?, ?)'
+  const params = [args[0], args[1], args[2]]
+  db.serialize(() => {
+    db.run(sql, params);
+  });
+})
+
+export const db = createDbConnection()
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even

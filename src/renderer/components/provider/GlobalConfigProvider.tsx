@@ -10,10 +10,10 @@ const GlobalConfigProviderElement = (props: GlobalConfigProviderProps) => {
     theme={{
       components: {
         Button: {
-          defaultBorderColor: "#447c31",
-          defaultColor: "#447c31",
-          defaultHoverBorderColor: "#447c31",
-          defaultHoverColor: "#447c31"
+          defaultBorderColor: "#000000",
+          defaultColor: "#000000",
+          defaultHoverBorderColor: "#000000",
+          defaultHoverColor: "#000000"
         },
       }
     }}
