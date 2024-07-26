@@ -62,8 +62,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 450,
-    height: 550,
+    width: 1200,
+    height: 700,
     icon: getAssetPath('icon.png'),
     resizable: false,
     webPreferences: {
@@ -77,12 +77,13 @@ const createWindow = async () => {
     mainWindow?.setSize(args[0], args[1]);
     const screenHeight = screen.getPrimaryDisplay().bounds.height;
     const screenWidth = screen.getPrimaryDisplay().bounds.width;
-    const { width: windowWidth, height: windowHeight } = mainWindow?.getBounds()
+    const { width: windowWidth, height: windowHeight } =
+      mainWindow?.getBounds();
 
     const x = Math.round((screenWidth - windowWidth) / 2);
     const y = Math.round((screenHeight - windowHeight) / 2);
-    mainWindow?.setPosition(x, y)
-  })
+    mainWindow?.setPosition(x, y);
+  });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 
@@ -136,18 +137,18 @@ function createDbConnection() {
         )
     `);
   });
-  return db
+  return db;
 }
 
 ipcMain.on('sql-insert', (event, args) => {
-  const sql = 'insert into users(name, course, troop) values (?, ?, ?)'
-  const params = [args[0], args[1], args[2]]
+  const sql = 'insert into users(name, course, troop) values (?, ?, ?)';
+  const params = [args[0], args[1], args[2]];
   db.serialize(() => {
     db.run(sql, params);
   });
-})
+});
 
-export const db = createDbConnection()
+export const db = createDbConnection();
 
 app.on('window-all-closed', () => {
   // Respect the OSX convention of having the application in memory even
