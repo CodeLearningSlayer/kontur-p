@@ -1,50 +1,34 @@
-import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
+import { MemoryRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import icon from '../../assets/icon.svg';
 import './App.css';
+import 'tailwindcss/tailwind.css';
+import Menu from '../pages/Menu/Menu';
+import Study from '../pages/Study/Study';
+import CamouflageLayout from '../layouts/CamouflageLayout';
 
-function Hello() {
+const Start = () => {
   return (
-    <div>
-      <div className="Hello">
-        <img width="200" alt="icon" src={icon} />
+    <CamouflageLayout>
+      <div className="main-container">
+        <div className="main-container__inner">
+          <img width="200" alt="icon" src={icon} />
+        </div>
+        <Link to="/menu">Авторизация</Link>
       </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="folded hands">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
-      </div>
-    </div>
+    </CamouflageLayout>
   );
-}
+};
 
-export default function App() {
+const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Hello />} />
+        <Route path="/" element={<Start />} />
+        <Route path="/menu" element={<Menu />} />
+        <Route path="/study" element={<Study />} />
       </Routes>
     </Router>
   );
-}
+};
+
+export default App;
