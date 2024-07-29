@@ -15,6 +15,7 @@ const Input = styled.input`
   font-weight: 700;
   font-size: 20px;
   min-height: 40px;
+  width: 100%;
 `;
 
 const StyledScreen = styled.div`

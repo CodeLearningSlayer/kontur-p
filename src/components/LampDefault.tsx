@@ -1,10 +1,18 @@
 import React from 'react';
 import lampOnYellow from '../../assets/images/components/lamp/lampType11OnYellow.png';
 
-const LampDefault = () => {
+const LampDefault = ({ className }: { className?: string }) => {
   return (
     <div>
-      <img src={lampOnYellow} alt="" />
+      <img
+        src={lampOnYellow}
+        style={{
+          width: 22,
+          height: 22,
+        }}
+        className={className}
+        alt=""
+      />
     </div>
   );
 };

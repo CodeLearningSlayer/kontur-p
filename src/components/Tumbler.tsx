@@ -7,7 +7,7 @@ import tumblerDown from '../../assets/images/components/switch/tumblerType4Down.
 
 interface TumblerProps {
   direction: 'vertical' | 'horizontal';
-  caption: string;
+  caption?: string;
   // eslint-disable-next-line react/require-default-props
   topCaption?: string;
 }

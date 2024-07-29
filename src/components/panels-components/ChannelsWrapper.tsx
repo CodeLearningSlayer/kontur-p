@@ -5,7 +5,7 @@ const ChannelsWrapper = styled.div`
   flex-direction: column;
   gap: 8px;
   margin-left: -30px;
-  margin-bottom: 220px;
+  margin-bottom: 200px;
 `;
 
 export default ChannelsWrapper;

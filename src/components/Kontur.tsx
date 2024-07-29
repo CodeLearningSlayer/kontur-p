@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import KP1 from './panels/KP1';
 import KP2 from './panels/KP2';
+import KP3 from './panels/KP3';
+import KP4 from './panels/KP4';
+import KP5 from './panels/KP5';
 
 const KonturWrapper = styled.main`
   background-color: #e9e9e9;
   display: grid;
-  grid-template-columns: repeat(4, 330px);
+  grid-template-columns: 200px 200px 210px 230px 580px;
   height: 100vh;
 `;
 
@@ -15,6 +18,9 @@ const Kontur = () => {
     <KonturWrapper>
       <KP1 />
       <KP2 />
+      <KP3 />
+      <KP4 />
+      <KP5 />
     </KonturWrapper>
   );
 };

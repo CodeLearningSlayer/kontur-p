@@ -4,7 +4,8 @@ import screw from '../../assets/images/components/screw.png';
 
 const StyledImg = styled.img`
   object-fit: cover;
-  width: 100%;
+  width: 30px;
+  height: 30px;
 `;
 
 const Screw = ({ className }: { className?: string }) => {
