@@ -1,9 +1,11 @@
-import { ReactElement, useState } from 'react';
+import { ReactElement, useContext, useEffect, useState } from 'react';
 import { Button, Input, InputNumber, Layout, Space } from 'antd';
 import styled from 'styled-components';
 import { Content, Footer } from 'antd/es/layout/layout';
-import { AuthViewModel } from './AuthViewModel';
+import { AuthViewModel, User } from './AuthViewModel';
 import { observer } from 'mobx-react';
+import { AppContext } from '../../App';
+import { useNavigate } from 'react-router-dom';
 
 
 const StyledLayout = styled(Layout)`
@@ -21,8 +23,10 @@ const StyledFooter = styled(Footer)`
   justify-content: center;
 `;
 
-const AuthElement = (): ReactElement => {
+const AuthElement = (props: { setContextUser: (user: User) => void }): ReactElement => {
   const [vm] = useState(() => new AuthViewModel())
+  const { setContextUser } = props
+
   return (
     <StyledLayout>
       <StyledContent>
@@ -38,13 +42,13 @@ const AuthElement = (): ReactElement => {
             </Space.Compact>
             <Space.Compact>
               <Input style={{ width: '40%', background: '#d9d3d3', color: '#000' }} disabled={true} defaultValue="Взвод" />
-              <InputNumber style={{ width: '60%' }} placeholder={"1"} onChange={vm.onChangeTroop} />
+              <InputNumber style={{ width: '60%' }} placeholder={useContext(AppContext).name} onChange={vm.onChangeTroop} />
             </Space.Compact>
           </Space>
         </Space>
       </StyledContent>
       <StyledFooter>
-        <Button onClick={vm.onClickAuth}>
+        <Button onClick={() => vm.onClickAuth(setContextUser)}>
           Войти
         </Button>
       </StyledFooter>
