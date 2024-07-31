@@ -228,10 +228,28 @@ const TractBottomButton = styled(SquareButton)`
 
 const KP5 = () => {
   const [adress, setAdress] = useState('');
+  const [sign, setSign] = useState('');
+  const [group, setGroup] = useState('');
+  const [inform, setInform] = useState('');
 
   const handleAdressChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setAdress(target.value);
+  };
+
+  const handleSignChange = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setSign(target.value);
+  };
+
+  const handleGroupChange = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setGroup(target.value);
+  };
+
+  const handleInformChange = (e: ChangeEvent) => {
+    const target = e.target as HTMLInputElement;
+    setInform(target.value);
   };
 
   return (
@@ -268,7 +286,7 @@ const KP5 = () => {
         <ScreenMiddle>
           <ScreenMiddleTop>
             <LeftPointer />
-            <SecondScreen />
+            <SecondScreen value={sign} setValue={handleSignChange} />
             <RightPointer />
           </ScreenMiddleTop>
           <ScreenMiddleBottom>
@@ -294,12 +312,12 @@ const KP5 = () => {
           </ScreenMiddleBottom>
         </ScreenMiddle>
         <ScreenGroup>
-          <ThirdScreen />
+          <ThirdScreen value={group} setValue={handleGroupChange} />
           <VerticalLine />
           <SquareButton buttonType="hold" color="black" outerText="ГРУППА" />
         </ScreenGroup>
         <ScreenRight>
-          <FourthScreen />
+          <FourthScreen value={inform} setValue={handleInformChange} />
           <SquareButton outerText="ОБЩИЙ" buttonType="hold" color="red">
             C
           </SquareButton>

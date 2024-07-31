@@ -62,8 +62,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1440,
-    height: 780,
+    width: 1775,
+    height: 800,
     icon: getAssetPath('icon.png'),
     resizable: false,
     webPreferences: {
@@ -74,11 +74,11 @@ const createWindow = async () => {
   });
 
   ipcMain.on('resize-window', (event, args) => {
-    mainWindow?.setSize(args[0], args[1]);
+    mainWindow!.setSize(args[0], args[1]);
     const screenHeight = screen.getPrimaryDisplay().bounds.height;
     const screenWidth = screen.getPrimaryDisplay().bounds.width;
     const { width: windowWidth, height: windowHeight } =
-      mainWindow?.getBounds();
+      mainWindow!.getBounds();
 
     const x = Math.round((screenWidth - windowWidth) / 2);
     const y = Math.round((screenHeight - windowHeight) / 2);
@@ -122,7 +122,7 @@ function createDbConnection() {
 
   let dbPath = path.join(__dirname, 'main_sql.db');
 
-  let db = new sqlite3.Database(dbPath, (err) => {
+  let db = new sqlite3.Database(dbPath, (err: Error) => {
     if (err) {
       console.error(err.message);
     }

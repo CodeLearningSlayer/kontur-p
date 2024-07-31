@@ -19,17 +19,21 @@ const LampWithCaption = ({
   className,
   gap,
 }: {
-  caption: string;
-  side: CaptionSide;
+  caption?: string;
+  side?: CaptionSide;
   className?: string;
   gap?: number;
 }) => {
   const [lampState, setLampState] = useState<'active' | 'default'>('default');
 
   return (
-    <LampWrapper $side={side} className={className} $gap={gap}>
+    <LampWrapper
+      $side={side ?? 'top'}
+      className={className}
+      $gap={caption ? gap : 0}
+    >
       <div className="caption" style={{ fontSize: 14 }}>
-        {caption}
+        {caption ?? ''}
       </div>
       {lampState === 'default' ? <LampDefault /> : <LampActive />}
     </LampWrapper>

@@ -12,6 +12,7 @@ const ButtonsBlock = styled.div`
   display: flex;
   flex-direction: column;
   gap: 4px;
+  margin-bottom: 20px;
 `;
 
 const KP3 = () => {

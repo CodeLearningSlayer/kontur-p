@@ -1,5 +1,5 @@
 import React from 'react';
-import lampOnYellow from '../../assets/images/components/lamp/lampType11OnYellow.png';
+import lampOnYellow from '../../assets/images/components/lamp/lampOnYellow.png';
 
 const LampDefault = ({ className }: { className?: string }) => {
   return (
@@ -7,8 +7,8 @@ const LampDefault = ({ className }: { className?: string }) => {
       <img
         src={lampOnYellow}
         style={{
-          width: 22,
-          height: 22,
+          width: 27,
+          height: 27,
         }}
         className={className}
         alt=""
