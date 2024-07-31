@@ -1,5 +1,5 @@
 import { action, makeObservable, observable } from 'mobx';
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent, useContext } from 'react';
 
 export interface User {
   name: string;
@@ -25,15 +25,20 @@ export class AuthViewModel {
       onChangeTroop: action.bound,
     });
   }
-
-  public onClickAuth() {
+  public onClickAuth(setContextUser: (user: User) => void) {
     if (this.isNameCorrect(this._name)) {
-      window.electron.ipcRenderer.sendAsyncMessage('sql-insert', [
+      setContextUser({
+        name: this._name,
+        course: this._course,
+        troop: this._troop,
+      });
+      window.electron.ipcRenderer.sendAsyncMessage(
+        'sql-insert',
         this._name,
         this._course,
         this._troop,
-      ]);
-      window.electron.ipcRenderer.sendMessage('resize-window', [1200, 700]);
+      );
+      window.electron.ipcRenderer.sendAsyncMessage('resize-window', 1200, 700);
     }
   }
 
@@ -62,8 +67,8 @@ export class AuthViewModel {
   }
 
   private isNameCorrect(name: string): boolean {
-    // const regex = /[А-Я][а-я]* [А-Я]\. [А-Я]\./;
-    // return regex.test(name);
+    //const regex = /[А-Я][а-я]* [А-Я]\. [А-Я]\./
+    //return regex.test(name)
     return true;
   }
 }

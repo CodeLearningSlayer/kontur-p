@@ -1,11 +1,10 @@
 import { ReactElement, useState } from 'react';
-import { observer } from 'mobx-react';
 import { Button, Input, InputNumber, Space } from 'antd';
 import styled from 'styled-components';
 import { Content, Footer } from 'antd/es/layout/layout';
-import { AuthViewModel } from './AuthViewModel';
+import { observer } from 'mobx-react';
+import { AuthViewModel, User } from './AuthViewModel';
 import CamouflageLayout from '../../../layouts/CamouflageLayout';
-import { useNavigate } from 'react-router-dom';
 
 const StyledLayout = styled(CamouflageLayout)`
   display: flex;
@@ -27,20 +26,16 @@ const StyledFooter = styled(Footer)`
   justify-content: center;
 `;
 
-const AuthElement = (): ReactElement => {
+const AuthElement = (props: {
+  setContextUser: (user: User) => void;
+}): ReactElement => {
   const [vm] = useState(() => new AuthViewModel());
-
-  const navigate = useNavigate();
-
-  const onAuthClick = () => {
-    vm.onClickAuth();
-    navigate('/study');
-  };
+  const { setContextUser } = props;
 
   return (
     <StyledLayout>
       <StyledContent>
-        <Space style={{ width: '350px' }} direction={'vertical'}>
+        <Space style={{ width: '350px' }} direction="vertical">
           <Space.Compact>
             <Input
               style={{ width: '20%', background: '#d9d3d3', color: '#000' }}
@@ -82,9 +77,10 @@ const AuthElement = (): ReactElement => {
         </Space>
       </StyledContent>
       <StyledFooter>
-        <Button onClick={onAuthClick}>Войти</Button>
+        <Button onClick={() => vm.onClickAuth(setContextUser)}>Войти</Button>
       </StyledFooter>
     </StyledLayout>
   );
 };
-export const Auth = observer(AuthElement);
+const Auth = observer(AuthElement);
+export default Auth;

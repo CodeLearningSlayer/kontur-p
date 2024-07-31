@@ -73,8 +73,8 @@ const createWindow = async () => {
     },
   });
 
-  ipcMain.on('resize-window', (event, args) => {
-    mainWindow!.setSize(args[0], args[1]);
+  ipcMain.on('resize-window', (event, width, height) => {
+    mainWindow?.setSize(width, height);
     const screenHeight = screen.getPrimaryDisplay().bounds.height;
     const screenWidth = screen.getPrimaryDisplay().bounds.width;
     const { width: windowWidth, height: windowHeight } =
@@ -83,6 +83,9 @@ const createWindow = async () => {
     const x = Math.round((screenWidth - windowWidth) / 2);
     const y = Math.round((screenHeight - windowHeight) / 2);
     mainWindow?.setPosition(x, y);
+    if (mainWindow instanceof BrowserWindow) {
+      mainWindow.loadURL('http://localhost:1212/index.html#/study');
+    }
   });
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
@@ -105,18 +108,15 @@ const createWindow = async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 
-  // Open urls in the user's browser
   mainWindow.webContents.setWindowOpenHandler((edata) => {
     shell.openExternal(edata.url);
     return { action: 'deny' };
   });
 
-  // Remove this if your app does not use auto updates
-  // eslint-disable-next-line
   new AppUpdater();
 };
 
-function createDbConnection() {
+const db = (function createDbConnection() {
   const sqlite3 = require('sqlite3').verbose();
   const path = require('path');
 
@@ -138,21 +138,16 @@ function createDbConnection() {
     `);
   });
   return db;
-}
+})();
 
-ipcMain.on('sql-insert', (event, args) => {
+ipcMain.on('sql-insert', (event, name, course, troop) => {
+  event.preventDefault();
   const sql = 'insert into users(name, course, troop) values (?, ?, ?)';
-  const params = [args[0], args[1], args[2]];
-  db.serialize(() => {
-    db.run(sql, params);
-  });
+  const params = [name, course, troop];
+  db.run(sql, params);
 });
 
-export const db = createDbConnection();
-
 app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
   if (process.platform !== 'darwin') {
     app.quit();
   }
@@ -163,8 +158,6 @@ app
   .then(() => {
     createWindow();
     app.on('activate', () => {
-      // On macOS it's common to re-create a window in the app when the
-      // dock icon is clicked and there are no other windows open.
       if (mainWindow === null) createWindow();
     });
   })
