@@ -5,8 +5,8 @@ import LampWithCaption from '../panels-components/LampWithCaption';
 import DigitalScreen from '../panels-components/DigitalScreen';
 import ButtonWithCaption from '../panels-components/ButtonWithCaption';
 import Tumbler from '../Tumbler';
-import Screw from '../Screw';
 import TopScrew from '../panels-components/TopScrew';
+import BottomScrew from '../panels-components/BottomScrew';
 
 const InfoScreen = styled.div`
   text-align: center;
@@ -81,10 +81,10 @@ const KP2 = () => {
       <StyledButtonWithCaption caption="НАЧ. ИНФОРМ." side="top" gap={3} />
       <Tumbler
         direction="vertical"
-        caption="КОНТРОЛЬ"
+        caption="КОНТРОЛЬ 1"
         topCaption="КОНТРОЛЬ 2"
       />
-      <Screw />
+      <BottomScrew />
     </PanelLayout>
   );
 };

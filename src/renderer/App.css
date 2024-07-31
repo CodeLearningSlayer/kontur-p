@@ -2,6 +2,11 @@
  * @NOTE: Prepend a `~` to css file paths that are in your node_modules
  *        See https://github.com/webpack-contrib/sass-loader#imports
  */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   height: 100vh;
   font-family: sans-serif;
@@ -9,7 +14,7 @@ body {
   /* background-image: url('../../assets/images/background.jpeg'); */
   background-size: cover;
   margin: 0;
-  font-size: 16px;
+  font-size: 14px;
 }
 
 li {
@@ -33,4 +38,8 @@ a:hover {
   justify-content: center;
   align-items: center;
   margin: 20px 0;
+}
+
+input {
+  box-sizing: border-box;
 }

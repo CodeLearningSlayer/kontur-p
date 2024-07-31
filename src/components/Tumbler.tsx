@@ -7,7 +7,8 @@ import tumblerDown from '../../assets/images/components/switch/tumblerType4Down.
 
 interface TumblerProps {
   direction: 'vertical' | 'horizontal';
-  caption: string;
+  caption?: string;
+  className?: string;
   // eslint-disable-next-line react/require-default-props
   topCaption?: string;
 }
@@ -25,11 +26,18 @@ const Button = styled.button`
   background: transparent;
   display: flex;
   justify-content: center;
+  filter: drop-shadow(2px 2px 4px);
   align-items: center;
   margin: 0;
+  margin-bottom: -7px;
 `;
 
-const Tumbler: FC<TumblerProps> = ({ direction, caption, topCaption }) => {
+const Tumbler: FC<TumblerProps> = ({
+  direction,
+  caption,
+  topCaption,
+  className,
+}) => {
   const [tumblerState, setTumblerState] = useState(false);
 
   const onClick = () => {
@@ -44,7 +52,7 @@ const Tumbler: FC<TumblerProps> = ({ direction, caption, topCaption }) => {
   }, [direction, tumblerState]);
 
   return (
-    <TumblerWrapper>
+    <TumblerWrapper className={className}>
       {topCaption && <div>{topCaption}</div>}
       <Button type="button" onClick={onClick}>
         <img src={tumblerImg} alt="switch up" />

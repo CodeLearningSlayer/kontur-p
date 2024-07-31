@@ -62,8 +62,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 700,
-    height: 550,
+    width: 1775,
+    height: 800,
     icon: getAssetPath('icon.png'),
     resizable: false,
     webPreferences: {
@@ -78,7 +78,7 @@ const createWindow = async () => {
     const screenHeight = screen.getPrimaryDisplay().bounds.height;
     const screenWidth = screen.getPrimaryDisplay().bounds.width;
     const { width: windowWidth, height: windowHeight } =
-      mainWindow?.getBounds();
+      mainWindow!.getBounds();
 
     const x = Math.round((screenWidth - windowWidth) / 2);
     const y = Math.round((screenHeight - windowHeight) / 2);
@@ -122,7 +122,7 @@ const db = (function createDbConnection() {
 
   let dbPath = path.join(__dirname, 'main_sql.db');
 
-  let db = new sqlite3.Database(dbPath, (err) => {
+  let db = new sqlite3.Database(dbPath, (err: Error) => {
     if (err) {
       console.error(err.message);
     }
@@ -138,10 +138,10 @@ const db = (function createDbConnection() {
     `);
   });
   return db;
-})()
+})();
 
 ipcMain.on('sql-insert', (event, name, course, troop) => {
-  event.preventDefault()
+  event.preventDefault();
   const sql = 'insert into users(name, course, troop) values (?, ?, ?)';
   const params = [name, course, troop];
   db.run(sql, params);
