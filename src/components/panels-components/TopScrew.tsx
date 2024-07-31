@@ -9,9 +9,15 @@ const TopScrewWrapper = styled.div`
   gap: 20px;
 `;
 
-const TopScrew = ({ name }: { name: string }) => {
+const TopScrew = ({
+  name,
+  className,
+}: {
+  name: string;
+  className?: string;
+}) => {
   return (
-    <TopScrewWrapper className="top-screw">
+    <TopScrewWrapper className={`top-screw ${className ?? ''}`}>
       <div>{name}</div>
       <Screw />
     </TopScrewWrapper>

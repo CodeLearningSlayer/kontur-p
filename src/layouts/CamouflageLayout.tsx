@@ -12,8 +12,12 @@ const CamoLayout = styled.div`
   padding: 12px;
 `;
 
-const CamouflageLayout: FC<PropsWithChildren> = ({ children }) => {
-  return <CamoLayout>{children}</CamoLayout>;
+// eslint-disable-next-line react/require-default-props
+const CamouflageLayout: FC<PropsWithChildren & { className?: string }> = ({
+  children,
+  className,
+}) => {
+  return <CamoLayout className={className}>{children}</CamoLayout>;
 };
 
 export default CamouflageLayout;

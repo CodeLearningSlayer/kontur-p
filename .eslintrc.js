@@ -20,7 +20,26 @@ module.exports = {
         unnamedComponents: 'arrow-function',
       },
     ],
+    'react/require-default-props': [
+      0,
+      {
+        ignoreFunctionalComponents: true,
+      },
+    ],
     'no-nested-ternary': 'off',
+    'jsx-a11y/no-static-element-interactions': [
+      'error',
+      {
+        handlers: [
+          'onMouseDown',
+          'onMouseUp',
+          'onKeyPress',
+          'onKeyDown',
+          'onKeyUp',
+        ],
+        allowExpressionValues: true,
+      },
+    ],
   },
   parserOptions: {
     ecmaVersion: 2022,

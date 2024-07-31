@@ -1,19 +1,22 @@
-import { ReactElement, useContext, useEffect, useState } from 'react';
-import { Button, Input, InputNumber, Layout, Space } from 'antd';
+import { ReactElement, useState } from 'react';
+import { Button, Input, InputNumber, Space } from 'antd';
 import styled from 'styled-components';
 import { Content, Footer } from 'antd/es/layout/layout';
-import { AuthViewModel, User } from './AuthViewModel';
 import { observer } from 'mobx-react';
-import { AppContext } from '../../App';
-import { useNavigate } from 'react-router-dom';
+import { AuthViewModel, User } from './AuthViewModel';
+import CamouflageLayout from '../../../layouts/CamouflageLayout';
 
-
-const StyledLayout = styled(Layout)`
-  background: none;
+const StyledLayout = styled(CamouflageLayout)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 `;
 
 const StyledContent = styled(Content)`
   padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledFooter = styled(Footer)`
@@ -23,36 +26,61 @@ const StyledFooter = styled(Footer)`
   justify-content: center;
 `;
 
-const AuthElement = (props: { setContextUser: (user: User) => void }): ReactElement => {
-  const [vm] = useState(() => new AuthViewModel())
-  const { setContextUser } = props
+const AuthElement = (props: {
+  setContextUser: (user: User) => void;
+}): ReactElement => {
+  const [vm] = useState(() => new AuthViewModel());
+  const { setContextUser } = props;
 
   return (
     <StyledLayout>
       <StyledContent>
-        <Space style={{ width: '350px'}} direction={'vertical'}>
+        <Space style={{ width: '350px' }} direction="vertical">
           <Space.Compact>
-            <Input style={{ width: '20%', background: '#d9d3d3', color: '#000' }} disabled={true} defaultValue="ФИО" />
-            <Input style={{ width: '80%' }} placeholder={"Петров А. С."} onChange={vm.onChangeName} />
+            <Input
+              style={{ width: '20%', background: '#d9d3d3', color: '#000' }}
+              disabled
+              defaultValue="ФИО"
+            />
+            <Input
+              style={{ width: '80%' }}
+              placeholder="Петров А. С."
+              onChange={vm.onChangeName}
+            />
           </Space.Compact>
-          <Space direction={'horizontal'}>
+          <Space direction="horizontal">
             <Space.Compact>
-              <Input style={{ width: '40%', background: '#d9d3d3', color: '#000' }} disabled={true} defaultValue="Курс" />
-              <InputNumber style={{ width: '60%' }} placeholder={"3"} onChange={vm.onChangeCourse} />
+              <Input
+                style={{ width: '40%', background: '#d9d3d3', color: '#000' }}
+                disabled
+                defaultValue="Курс"
+              />
+              <InputNumber
+                style={{ width: '60%' }}
+                placeholder="3"
+                onChange={vm.onChangeCourse}
+              />
             </Space.Compact>
             <Space.Compact>
-              <Input style={{ width: '40%', background: '#d9d3d3', color: '#000' }} disabled={true} defaultValue="Взвод" />
-              <InputNumber style={{ width: '60%' }} placeholder={useContext(AppContext).name} onChange={vm.onChangeTroop} />
+              <Input
+                style={{ width: '40%', background: '#d9d3d3', color: '#000' }}
+                disabled
+                defaultValue="Взвод"
+              />
+              <InputNumber
+                style={{ width: '60%' }}
+                placeholder="1"
+                onChange={vm.onChangeTroop}
+              />
             </Space.Compact>
           </Space>
         </Space>
       </StyledContent>
       <StyledFooter>
-        <Button onClick={() => vm.onClickAuth(setContextUser)}>
-          Войти
-        </Button>
+        <Button onClick={() => vm.onClickAuth(setContextUser)}>Войти</Button>
       </StyledFooter>
     </StyledLayout>
   );
 };
-export const Auth = observer(AuthElement)
+const Auth = observer(AuthElement);
+export default Auth;
