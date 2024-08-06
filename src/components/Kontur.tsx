@@ -12,7 +12,7 @@ const KonturWrapper = styled.main`
   background-color: #e9e9e9;
   display: grid;
   grid-template-columns: 175px 160px 180px 230px 580px 200px 250px;
-  height: 100vh;
+  height: 800px;
 `;
 
 const Kontur = () => {

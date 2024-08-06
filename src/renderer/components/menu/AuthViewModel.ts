@@ -25,6 +25,7 @@ export class AuthViewModel {
       onChangeTroop: action.bound,
     });
   }
+
   public onClickAuth(setContextUser: (user: User) => void) {
     if (this.isNameCorrect(this._name)) {
       setContextUser({
@@ -67,8 +68,8 @@ export class AuthViewModel {
   }
 
   private isNameCorrect(name: string): boolean {
-    //const regex = /[А-Я][а-я]* [А-Я]\. [А-Я]\./
-    //return regex.test(name)
+    // const regex = /[А-Я][а-я]* [А-Я]\. [А-Я]\./
+    // return regex.test(name)
     return true;
   }
 }

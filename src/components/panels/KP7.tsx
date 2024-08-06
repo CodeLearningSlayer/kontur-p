@@ -63,7 +63,7 @@ const KP7 = () => {
         <LampWithCaption />
       </LampBlock>
       <StyledTumbler caption="ОТКЛ" topCaption="СЕТЬ" direction="vertical" />
-      <StyledPowerMeter />
+      <StyledPowerMeter position={0} />
       <CirclePowerSelect />
       <BottomScrew />
     </PanelLayout>

@@ -63,7 +63,7 @@ const createWindow = async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1775,
-    height: 800,
+    height: 1020,
     icon: getAssetPath('icon.png'),
     resizable: false,
     webPreferences: {
@@ -120,9 +120,9 @@ const db = (function createDbConnection() {
   const sqlite3 = require('sqlite3').verbose();
   const path = require('path');
 
-  let dbPath = path.join(__dirname, 'main_sql.db');
+  const dbPath = path.join(__dirname, 'main_sql.db');
 
-  let db = new sqlite3.Database(dbPath, (err: Error) => {
+  const db = new sqlite3.Database(dbPath, (err: Error) => {
     if (err) {
       console.error(err.message);
     }

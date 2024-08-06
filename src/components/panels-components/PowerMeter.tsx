@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import styled from 'styled-components';
 import activeScreen from '../../../assets/images/components/screen-active.png';
 import defaultScreen from '../../../assets/images/components/screen-default.png';
@@ -32,7 +32,13 @@ const PowerMeterScrew = styled(Screw)<{
   width: 30px;
 `;
 
-const PowerMeter = ({ className }: { className?: string }) => {
+const PowerMeter = ({
+  className,
+  position,
+}: {
+  className?: string;
+  position: number;
+}) => {
   const [screenState, setScreenState] = useState<
     'idle' | 'active' | 'intermediate'
   >('idle');
@@ -49,6 +55,15 @@ const PowerMeter = ({ className }: { className?: string }) => {
         return defaultScreen;
     }
   }, [screenState]);
+
+  useEffect(() => {
+    if (position !== 1) {
+      setScreenState('intermediate');
+      setTimeout(() => {
+        setScreenState('active');
+      }, 300);
+    }
+  }, [position]);
 
   return (
     <PowerMeterWrapper className={className}>
