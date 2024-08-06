@@ -1,5 +1,9 @@
 import { action, makeObservable, observable } from 'mobx';
 import { SyntheticEvent, useContext } from 'react';
+import {
+  checkIfUserNew,
+  insertUser,
+} from '../../../renderer/components/dao/Database';
 
 export interface User {
   name: string;
@@ -26,20 +30,17 @@ export class AuthViewModel {
     });
   }
 
-  public onClickAuth(setContextUser: (user: User) => void) {
+  public async onClickAuth(setContextUser: (user: User) => void) {
     if (this.isNameCorrect(this._name)) {
       setContextUser({
         name: this._name,
         course: this._course,
         troop: this._troop,
       });
-      window.electron.ipcRenderer.sendAsyncMessage(
-        'sql-insert',
-        this._name,
-        this._course,
-        this._troop,
-      );
-      window.electron.ipcRenderer.sendAsyncMessage('resize-window', 1200, 700);
+      await checkIfUserNew(this._name).then((result) => {
+        if (!result) return;
+        insertUser(this._name, this._course, this._troop);
+      });
     }
   }
 

@@ -4,8 +4,8 @@ import React, { useState } from 'react';
 import Menu from '../pages/Menu/Menu';
 import Study from '../pages/Study/Study';
 import { GlobalConfigProvider } from './components/provider/GlobalConfigProvider';
-import Auth from './components/menu/Auth';
-import { User } from './components/menu/AuthViewModel';
+import Auth from '../pages/Menu/Auth/Auth';
+import { User } from '../pages/Menu/Auth/AuthViewModel';
 
 export const AppContext = React.createContext<User>({
   name: '',

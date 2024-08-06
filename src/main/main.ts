@@ -62,8 +62,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1775,
-    height: 1020,
+    width: 600,
+    height: 500,
     icon: getAssetPath('icon.png'),
     resizable: false,
     webPreferences: {
@@ -116,7 +116,7 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-const db = (function createDbConnection() {
+export const db = (function createDbConnection() {
   const sqlite3 = require('sqlite3').verbose();
   const path = require('path');
 
@@ -139,13 +139,6 @@ const db = (function createDbConnection() {
   });
   return db;
 })();
-
-ipcMain.on('sql-insert', (event, name, course, troop) => {
-  event.preventDefault();
-  const sql = 'insert into users(name, course, troop) values (?, ?, ?)';
-  const params = [name, course, troop];
-  db.run(sql, params);
-});
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {

@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'resize-window' | 'sql-insert';
+export type Channels = 'ipc-example' | 'resize-window';
 
 const electronHandler = {
   ipcRenderer: {
