@@ -17,16 +17,18 @@ const ButtonWithCaption = ({
   side,
   gap,
   className,
+  onChange
 }: {
   caption: string;
   side: CaptionSide;
   gap?: number;
   className?: string;
+  onChange?: () => void;
 }) => {
   return (
     <ButtonWrapper $side={side} $gap={gap} className={className}>
       <div className="caption">{caption}</div>
-      <ButtonRound type="hold" />
+      <ButtonRound type="hold" onChange={onChange} />
     </ButtonWrapper>
   );
 };

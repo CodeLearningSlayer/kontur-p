@@ -7,8 +7,8 @@ const LampActive = ({ className }: { className?: string }) => {
       <img
         src={lampOnGreen}
         style={{
-          width: 28,
-          height: 28,
+          width: 27,
+          height: 27,
         }}
         className={className}
         alt="lamp-active"

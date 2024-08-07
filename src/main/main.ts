@@ -62,7 +62,7 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 600,
+    width: 400,
     height: 500,
     icon: getAssetPath('icon.png'),
     resizable: false,
@@ -83,10 +83,13 @@ const createWindow = async () => {
     const x = Math.round((screenWidth - windowWidth) / 2);
     const y = Math.round((screenHeight - windowHeight) / 2);
     mainWindow?.setPosition(x, y);
-    if (mainWindow instanceof BrowserWindow) {
-      mainWindow.loadURL('http://localhost:1212/index.html#/study');
-    }
   });
+
+  ipcMain.on('redirect', (event, path) => {
+    if (mainWindow instanceof BrowserWindow) {
+      mainWindow.loadURL(`http://localhost:1212/index.html#${path}`);
+    }
+  })
 
   mainWindow.loadURL(resolveHtmlPath('index.html'));
 

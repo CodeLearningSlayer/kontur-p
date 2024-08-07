@@ -16,6 +16,7 @@ const CircleSelectImg = styled.img<{
 
 interface CircleSelectProps {
   className?: string;
+  onChange: (position: number) => void
 }
 
 const StyledRadio = styled(Radio)`
@@ -32,24 +33,20 @@ const CircleWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const CircleSelect: FC<CircleSelectProps> = ({ className }) => {
-  const [position, setPosition] = useState(0);
+const CircleSelect: FC<CircleSelectProps> = ({ className, onChange }) => {
+  const [position, setPosition] = useState(1);
 
   const handleClick = () => {
-    if (position < 9) {
-      setPosition((curPos) => curPos + 1);
-    } else {
-      setPosition(0);
-    }
+    const newPosition = position < 9 ? position + 1 : 0;
+    setPosition(newPosition);
+    onChange(newPosition);
   };
 
   const handleRightClick = (e: MouseEvent) => {
     e.preventDefault();
-    if (position > 0) {
-      setPosition((pos) => pos - 1);
-    } else {
-      setPosition(9);
-    }
+    const newPosition = position > 0 ? position - 1 : 9;
+    setPosition(newPosition);
+    onChange(newPosition);
   };
 
   const radios = useMemo(
@@ -63,6 +60,7 @@ const CircleSelect: FC<CircleSelectProps> = ({ className }) => {
   const handleChange = (e: RadioChangeEvent) => {
     const target = e.target as HTMLInputElement;
     setPosition(+target.value);
+    onChange(+target.value);
   };
 
   const activeOptions = useMemo(() => {

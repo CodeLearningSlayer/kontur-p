@@ -10,7 +10,6 @@ const MenuInner = styled.div`
   border: 1px solid white;
   display: flex;
   flex-direction: column;
-  height: 100%;
   margin-bottom: 10px;
   padding: 20px;
   flex-grow: 1;
@@ -18,6 +17,11 @@ const MenuInner = styled.div`
 
 const MenuTitle = styled.h1`
   text-align: center;
+  display: flex;
+  margin-top: 40px;
+  flex-direction: column;
+  justify-content: end;
+  flex-grow: 2;
 `;
 
 const StyledRadio = styled(Radio)`
@@ -32,19 +36,15 @@ const Buttons = styled.div`
 const Menu = () => {
   const [value, setValue] = useState<'study' | 'test'>('study');
 
-  const navigate = useNavigate();
-
   const onChange = (e: RadioChangeEvent) => {
     console.log(e);
     setValue(e.target.value);
   };
 
   const onBeginClick = () => {
-    if (value === 'study') {
-      navigate('/study');
-    } else if (value === 'test') {
-      navigate('/test');
-    }
+    const windowHeight = value == 'study' ? 1100 : 850
+    window.electron.ipcRenderer.sendAsyncMessage('resize-window', 1781, windowHeight)
+    window.electron.ipcRenderer.sendAsyncMessage('redirect', `/${value}`)
   };
 
   return (

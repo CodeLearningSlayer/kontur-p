@@ -13,7 +13,7 @@ const StyledLayout = styled(CamouflageLayout)`
 `;
 
 const StyledContent = styled(Content)`
-  padding: 10px;
+  padding: 100px 25px 10px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +55,8 @@ const AuthElement = (props: {
                 disabled
                 defaultValue="Курс"
               />
-              <InputNumber
+              <Input
+                inputMode="numeric"
                 style={{ width: '60%' }}
                 placeholder="3"
                 onChange={vm.onChangeCourse}

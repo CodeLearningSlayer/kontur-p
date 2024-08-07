@@ -1,7 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import Kontur from '../../components/Kontur';
 import StepsPanel from '../../components/StepsPanel';
+import Kontur from '../../components/kontur/Kontur';
+import { KonturViewModel } from '../../components/kontur/KonturViewModel';
+import { observer } from 'mobx-react';
+import CurrentStepPanel from '../../components/CurrentStepPanel';
 
 const StudyWrapper = styled.div`
   display: flex;
@@ -9,76 +12,25 @@ const StudyWrapper = styled.div`
   max-height: 100vh;
 `;
 
-const Study = () => {
-  const steps = useRef([
-    {
-      title: 'На блоке КП7 тумблер СЕТЬ в положение ВКЛ',
-      isComplete: true,
-    },
-    {
-      title:
-        'На блоке КП7 изменяя переключатель КОНТРОЛЬ, от +9В до +9В резерв, убедитесь, что стрелка вольтметра находится в закрашенном секторе',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 тумблер ПЕРЕДАЧА установите в положение МТК',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 нажмите кнопку С ОБЩИЙ',
-      isComplete: false,
-    },
-    {
-      title:
-        'На блоке КП5 нажмите кнопку ПОДПИСЬ 3 двойным кликом мыши, нажатием кнопок 0-9 наберите трехзначную комбинацию',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 нажмите кнопку ОТКЛ. ЗС',
-      isComplete: false,
-    },
-    {
-      title:
-        'На блоке КП5 нажмите кнопку АДРЕС К двойным кликом мыши, нажатием кнопок 0-9 наберите трехзначную комбинацию, совпадающую с  ПОДПИСЬ 3',
-      isComplete: false,
-    },
-    {
-      title:
-        'На блоке КП5 последовательно нажимая кнопку ГРУППА, с помощью кнопок 0-9 наберите трехзначные комбинации для групп 1-8',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП4 переключатель ПРИОРИТЕТ поставьте в положение ОТКЛ',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП4 нажмите кнопку КОНТРОЛЬ',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 нажмите кнопку ПЕРЕДАЧА ВЫЗОВ',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 нажмите кнопку НАБОР КК',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 нажмите кнопку ПЕРЕДАЧА ИНФОРМАНЦИЯ',
-      isComplete: false,
-    },
-    {
-      title: 'На блоке КП5 нажмите кнопку ОТКЛ. ЗС',
-      isComplete: false,
-    },
-  ]);
+const StudyPanel = styled.div`
+    display: grid;
+  grid-template-columns: 1fr 460px;
+  gap: 10px;
+`;
 
+const CurrentStep = styled.div``
+
+const StudyElement = () => {
+  const [vm] = useState(new KonturViewModel())
   return (
     <StudyWrapper>
-      <Kontur />
-      <StepsPanel steps={steps.current} />
+      <Kontur data={vm.data} />
+      <StudyPanel>
+        <StepsPanel steps={vm.guideSteps} currentIndex={vm.currentIndex} />
+        <CurrentStepPanel currentStep={vm.guideSteps[vm.currentIndex].title} />
+      </StudyPanel>
     </StudyWrapper>
   );
 };
-
+const Study = observer(StudyElement)
 export default Study;

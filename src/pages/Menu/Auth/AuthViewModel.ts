@@ -1,5 +1,6 @@
 import { action, makeObservable, observable } from 'mobx';
 import { SyntheticEvent, useContext } from 'react';
+import * as electron from 'electron';
 import {
   checkIfUserNew,
   insertUser,
@@ -37,10 +38,13 @@ export class AuthViewModel {
         course: this._course,
         troop: this._troop,
       });
+      window.electron.ipcRenderer.sendAsyncMessage('redirect', '/menu')
+      /*
       await checkIfUserNew(this._name).then((result) => {
-        if (!result) return;
-        insertUser(this._name, this._course, this._troop);
-      });
+        if (!result) return
+        insertUser(this._name, this._course, this._troop)
+      })
+      */
     }
   }
 

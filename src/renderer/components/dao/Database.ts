@@ -1,3 +1,4 @@
+/*
 import { db } from '../../../main/main';
 
 export async function checkIfUserNew(name: string) {
@@ -12,3 +13,4 @@ export async function insertUser(name: string, course: number, troop: number) {
   const params = [name, course, troop];
   db.run(sql, params);
 }
+*/

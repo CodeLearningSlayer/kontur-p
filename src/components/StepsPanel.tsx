@@ -4,13 +4,14 @@ import styled from 'styled-components';
 interface StepsPanelProps {
   steps: Array<{
     title: string;
-    isComplete: boolean;
+    isCompleted: boolean;
   }>;
+  currentIndex: number
   className?: string;
 }
 
 const StepItem = styled.div<{ $isComplete: boolean }>`
-  ${({ $isComplete }) => ($isComplete ? `color: green` : 'color: inherit')}
+  ${({ $isComplete }) => ($isComplete ? `color: green; font-weight: bold;` : 'color: inherit')}
 `;
 
 const StepsWrapper = styled.div`
@@ -18,15 +19,15 @@ const StepsWrapper = styled.div`
   padding: 10px;
 `;
 
-const StepsPanel: FC<StepsPanelProps> = ({ steps, className }) => {
+const StepsPanel: FC<StepsPanelProps> = ({ steps, currentIndex, className }) => {
   return (
     <StepsWrapper className={className}>
-      {steps.map((item) => (
+      {steps.map((item, index) => (
         <StepItem
           key={item.title + Date.now() + Math.random()}
-          $isComplete={item.isComplete}
+          $isComplete={item.isCompleted}
         >
-          {item.title}
+          {item.title} <strong>{index === currentIndex ? '🢀' : ''}</strong>
         </StepItem>
       ))}
     </StepsWrapper>

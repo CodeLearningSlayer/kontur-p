@@ -7,6 +7,7 @@ import Tumbler from '../Tumbler';
 import ButtonWithCaption from '../panels-components/ButtonWithCaption';
 import Fastening from '../panels-components/Fastening';
 import BottomScrew from '../panels-components/BottomScrew';
+import { KP6Props } from '../kontur/KonturViewModel';
 
 const KP6LampBlock = styled.div`
   display: grid;
@@ -59,13 +60,14 @@ const StyledFastening = styled(Fastening)`
   margin: 5px;
 `;
 
-const KP6 = () => {
+const KP6 = (props: KP6Props) => {
+  const { transferIsEnable } = props
   return (
     <PanelLayout>
       <TopScrew name="КП6" />
       <KP6LampBlockCaption>СБОЙ</KP6LampBlockCaption>
       <KP6LampBlock>
-        <LampWithCaption caption="ПЕРЕДАЧА" side="bottom" />
+        <LampWithCaption caption="ПЕРЕДАЧА" side="bottom" isActive={transferIsEnable} needToBlink={true} />
         <LampWithCaption />
         <LampWithCaption caption="РЕЖИМ 3" side="bottom" />
       </KP6LampBlock>

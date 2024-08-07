@@ -1,12 +1,13 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import PanelLayout from '../../layouts/PanelLayout';
-import LampWithCaption from '../panels-components/LampWithCaption';
-import DigitalScreen from '../panels-components/DigitalScreen';
-import ButtonWithCaption from '../panels-components/ButtonWithCaption';
-import Tumbler from '../Tumbler';
-import TopScrew from '../panels-components/TopScrew';
-import BottomScrew from '../panels-components/BottomScrew';
+import PanelLayout from '../../../layouts/PanelLayout';
+import LampWithCaption from '../../panels-components/LampWithCaption';
+import DigitalScreen from '../../panels-components/DigitalScreen';
+import ButtonWithCaption from '../../panels-components/ButtonWithCaption';
+import Tumbler from '../../Tumbler';
+import TopScrew from '../../panels-components/TopScrew';
+import BottomScrew from '../../panels-components/BottomScrew';
+import { KP2Props } from '../../kontur/KonturViewModel';
 
 const InfoScreen = styled.div`
   text-align: center;
@@ -38,7 +39,8 @@ const StyledButtonWithCaption = styled(ButtonWithCaption)`
   margin-bottom: 16px;
 `;
 
-const KP2 = () => {
+const KP2 = (props: KP2Props) => {
+  const { onChangeControl, onChangeInfoBegin, onChangePhase1 } = props
   const [informFirstState, setInformFirstState] = useState('');
   const [informSecondState, setInformSecondState] = useState('');
   const [groupState, setGroupState] = useState('');
@@ -74,15 +76,16 @@ const KP2 = () => {
       <OffsetBlock>
         <div style={{ marginBottom: 8, textAlign: 'center' }}>СДВИГ</div>
         <ButtonsBlock>
-          <ButtonWithCaption caption="1" side="top" gap={0} />
+          <ButtonWithCaption caption="1" side="top" gap={0} onChange={onChangePhase1} />
           <ButtonWithCaption caption="10" side="top" gap={0} />
         </ButtonsBlock>
       </OffsetBlock>
-      <StyledButtonWithCaption caption="НАЧ. ИНФОРМ." side="top" gap={3} />
+      <StyledButtonWithCaption caption="НАЧ. ИНФОРМ." side="top" gap={3} onChange={onChangeInfoBegin} />
       <Tumbler
         direction="vertical"
         caption="КОНТРОЛЬ 1"
         topCaption="КОНТРОЛЬ 2"
+        onChange={onChangeControl}
       />
       <BottomScrew />
     </PanelLayout>

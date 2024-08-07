@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import getStyleBySide, { CaptionSide } from '../../utils/getStyleBySide';
 import LampDefault from '../LampDefault';
 import LampActive from '../LampActive';
+import { observer } from 'mobx-react';
 
 const LampWrapper = styled.div<{ $side: CaptionSide; $gap?: number }>`
   display: flex;
@@ -13,19 +14,27 @@ const LampWrapper = styled.div<{ $side: CaptionSide; $gap?: number }>`
   align-items: center;
 `;
 
-const LampWithCaption = ({
+const LampWithCaptionElement = ({
   caption,
   side,
   className,
   gap,
+  isActive,
+  needToBlink
 }: {
   caption?: string;
+  isActive?: boolean;
+  needToBlink?: boolean;
   side?: CaptionSide;
   className?: string;
   gap?: number;
 }) => {
-  const [lampState, setLampState] = useState<'active' | 'default'>('default');
-
+  const [active, setActive] = useState(isActive)
+  if (needToBlink && isActive) {
+    setInterval(() => {
+      setActive(!active)
+    }, 2000)
+  }
   return (
     <LampWrapper
       $side={side ?? 'top'}
@@ -35,9 +44,10 @@ const LampWithCaption = ({
       <div className="caption" style={{ fontSize: 14 }}>
         {caption ?? ''}
       </div>
-      {lampState === 'default' ? <LampDefault /> : <LampActive />}
+      {needToBlink ? (active ? <LampActive /> : <LampDefault />) : (isActive ? <LampActive /> : <LampDefault />)}
     </LampWrapper>
   );
 };
 
+const LampWithCaption = observer(LampWithCaptionElement)
 export default LampWithCaption;

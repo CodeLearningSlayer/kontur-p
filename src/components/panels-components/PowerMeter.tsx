@@ -43,6 +43,17 @@ const PowerMeter = ({
     'idle' | 'active' | 'intermediate'
   >('idle');
 
+  useEffect(() => {
+    if (position !== 1) {
+      setScreenState("intermediate");
+      setTimeout(() => {
+        setScreenState("active")
+      }, 300);
+    } else {
+      setScreenState("idle");
+    }
+  }, [position])
+
   const currentScreen = useMemo(() => {
     switch (screenState) {
       case 'idle':

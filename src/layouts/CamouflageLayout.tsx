@@ -2,7 +2,7 @@
 import React, { FC, PropsWithChildren } from 'react';
 import styled from 'styled-components';
 // @ts-ignore
-import camo from '../../assets/images/background.jpeg';
+import camo from '../../assets/images/background-with-logo.png';
 
 const CamoLayout = styled.div`
   background-image: url(${camo});

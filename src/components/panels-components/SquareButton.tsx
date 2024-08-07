@@ -2,6 +2,7 @@ import React, { FC, PropsWithChildren, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import squareButtonRed from '../../../assets/images/components/button/buttonSquareRed.png';
 import squareButtonBlack from '../../../assets/images/components/button/buttonSquareBlackLarge.png';
+import { values } from 'mobx';
 
 const StyledButton = styled.button<{
   $isPressed: boolean;
@@ -12,6 +13,7 @@ const StyledButton = styled.button<{
       ? `background: url(${squareButtonBlack})`
       : `background: url(${squareButtonRed})`};
   color: white;
+  cursor: pointer;
   border-width: 0;
   width: 40px;
   margin: 0 auto;
@@ -34,6 +36,8 @@ interface SquareButtonProps {
   className?: string;
   buttonType: 'hold' | 'click';
   outerText?: string;
+  onChange: (value?: string) => void
+  value: boolean
 }
 
 const ButtonWrapper = styled.div`
@@ -54,26 +58,31 @@ const SquareButton: FC<PropsWithChildren<SquareButtonProps>> = ({
   buttonType,
   outerText,
   children,
+  onChange,
+  value
 }) => {
   const [isPressed, setIsPressed] = useState(false);
-
-  useEffect(() => {
-    console.log(isPressed);
-  }, [isPressed]);
 
   const onMouseDown = () => {
     if (!(buttonType === 'hold')) return;
     setIsPressed(true);
+    value = true;
   };
 
   const onMouseUp = () => {
     if (!(buttonType === 'hold')) return;
     setIsPressed(false);
+    value = false;
+    const buttonDescription = children as string == 'С' ? undefined : children as string;
+    console.log(onChange)
+    onChange ? onChange(buttonDescription) : () => {};
   };
 
   const onClick = () => {
     if (!(buttonType === 'click')) return;
-    setIsPressed((currValue) => !currValue);
+    setIsPressed((value => !value))
+    value = !value;
+    onChange ? onChange() : () => {};
   };
 
   return (

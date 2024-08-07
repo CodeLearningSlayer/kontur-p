@@ -1,14 +1,15 @@
 import React, { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
-import PanelLayout from '../../layouts/PanelLayout';
-import TopScrew from '../panels-components/TopScrew';
-import Screw from '../Screw';
-import LampWithCaption from '../panels-components/LampWithCaption';
-import DigitalScreen from '../panels-components/DigitalScreen';
-import SquareButton from '../panels-components/SquareButton';
-import Tumbler from '../Tumbler';
-import KP5Panel from '../panels-components/KP5Panel';
-import BottomScrew from '../panels-components/BottomScrew';
+import PanelLayout from '../../../layouts/PanelLayout';
+import TopScrew from '../../panels-components/TopScrew';
+import Screw from '../../Screw';
+import LampWithCaption from '../../panels-components/LampWithCaption';
+import DigitalScreen from '../../panels-components/DigitalScreen';
+import SquareButton from '../../panels-components/SquareButton';
+import Tumbler from '../../Tumbler';
+import KP5Panel from '../../panels-components/KP5Panel';
+import BottomScrew from '../../panels-components/BottomScrew';
+import { KP5Props } from '../../kontur/KonturViewModel';
 
 const TopScrewBlock = styled.div`
   display: flex;
@@ -226,7 +227,12 @@ const TractBottomButton = styled(SquareButton)`
   white-space: pre;
 `;
 
-const KP5 = () => {
+const KP5 = (props: KP5Props) => {
+  const { isSignEnable, isAddressEnable,
+    onChangeTransfer, onChangeGeneral, onChangeOff, onChangeKk, onChangeInfo, onChangeIncome,
+    onChangeSignEnable, onChangeAddressEnable, screenValue, onChangeScreenValue, controlLampActive,
+    currentGroup, onChangeCurrentGroupName, onChangeCurrentGroup, currentGroupName
+  } = props;
   const [adress, setAdress] = useState('');
   const [sign, setSign] = useState('');
   const [group, setGroup] = useState('');
@@ -239,6 +245,7 @@ const KP5 = () => {
 
   const handleSignChange = (e: ChangeEvent) => {
     const target = e.target as HTMLInputElement;
+    console.log("aaaaaaaaa")
     setSign(target.value);
   };
 
@@ -261,7 +268,7 @@ const KP5 = () => {
       <LampBlock>
         <LampLeftBlock>
           <LampAttachedToBottom caption="НЕИСПР." side="top" />
-          <LampAttachedToBottom caption="КОНТРОЛЬ" side="top" />
+          <LampAttachedToBottom caption="КОНТРОЛЬ" side="top" isActive={controlLampActive} />
           <LampAttachedToBottom caption="СБОЙ ПОДПИСИ" side="top" />
         </LampLeftBlock>
         <LampRightBlock>
@@ -269,7 +276,7 @@ const KP5 = () => {
           <LampAttachedToBottom caption="ОТБОЙ" side="top" />
           <LampAttachedToBottom caption="ПРИЕМ" side="top" />
           <StyledLamp
-            caption="ИНФОРМ. 
+            caption="ИНФОРМ.
           ПРИНЯТА"
             side="top"
           />
@@ -286,11 +293,11 @@ const KP5 = () => {
         <ScreenMiddle>
           <ScreenMiddleTop>
             <LeftPointer />
-            <SecondScreen value={sign} setValue={handleSignChange} />
+            <SecondScreen value={screenValue} onChange={onChangeScreenValue} isActive={isAddressEnable || isSignEnable} setValue={handleSignChange} />
             <RightPointer />
           </ScreenMiddleTop>
           <ScreenMiddleBottom>
-            <SquareButton outerText="АДРЕС" color="black" buttonType="click">
+            <SquareButton outerText="АДРЕС" color="black" buttonType="click" value={isAddressEnable} onChange={onChangeAddressEnable}>
               К
             </SquareButton>
             <SignButtonBlock>
@@ -304,7 +311,7 @@ const KP5 = () => {
                 <SquareButton color="red" buttonType="click">
                   2
                 </SquareButton>
-                <SquareButton color="red" buttonType="click">
+                <SquareButton color="red" buttonType="click" value={isSignEnable} onChange={onChangeSignEnable}>
                   3
                 </SquareButton>
               </SignButtonBottom>
@@ -312,13 +319,13 @@ const KP5 = () => {
           </ScreenMiddleBottom>
         </ScreenMiddle>
         <ScreenGroup>
-          <ThirdScreen value={group} setValue={handleGroupChange} />
+          <ThirdScreen value={currentGroup as string} isActive={currentGroup > 0} onChange={onChangeCurrentGroup} />
           <VerticalLine />
-          <SquareButton buttonType="hold" color="black" outerText="ГРУППА" />
+          <SquareButton buttonType="hold" color="black" outerText="ГРУППА" onChange={onChangeCurrentGroup} />
         </ScreenGroup>
         <ScreenRight>
-          <FourthScreen value={inform} setValue={handleInformChange} />
-          <SquareButton outerText="ОБЩИЙ" buttonType="hold" color="red">
+          <FourthScreen value={screenValue} isActive={currentGroup > 0} onChange={onChangeScreenValue} />
+          <SquareButton outerText="ОБЩИЙ" buttonType="hold" color="red" onChange={onChangeGeneral}>
             C
           </SquareButton>
         </ScreenRight>
@@ -328,8 +335,8 @@ const KP5 = () => {
           <CommunicationTractWrapper>
             <CommunicationTractCaption>ПЕРЕДАЧА</CommunicationTractCaption>
             <CommunicationTract>
-              <Tumbler direction="vertical" topCaption="МТК" />
-              <SquareButton buttonType="hold" color="black" outerText="ВЫЗОВ" />
+              <Tumbler direction="vertical" topCaption="МТК" onChange={onChangeTransfer} />
+              <SquareButton buttonType="hold" color="black" outerText="ВЫЗОВ" onChange={onChangeIncome} />
               <SquareButton
                 buttonType="hold"
                 color="black"
@@ -339,6 +346,7 @@ const KP5 = () => {
                 buttonType="hold"
                 color="black"
                 outerText="ИНФОРМ."
+                onChange={onChangeInfo}
               />
             </CommunicationTract>
           </CommunicationTractWrapper>
@@ -346,59 +354,60 @@ const KP5 = () => {
             <TractBottomButton
               buttonType="hold"
               color="black"
-              outerText="НАБОР 
+              outerText="НАБОР
 КК"
+              onChange={onChangeKk}
             >
               ПРМ
             </TractBottomButton>
             <TractBottomButton
               buttonType="hold"
               color="black"
-              outerText="КОНТРОЛЬ 
+              outerText="КОНТРОЛЬ
 ЗАНЯТОСТИ"
             />
           </TractBottomButtons>
         </KP5BottomLeft>
         <KP5BottomMiddle>
-          <SquareButton color="black" buttonType="hold" outerText="ОТКЛ. ЗС" />
+          <SquareButton color="black" buttonType="hold" outerText="ОТКЛ. ЗС" onChange={onChangeOff} />
           <KP5Panel />
         </KP5BottomMiddle>
         <KP5BottomRight>
           <KP5BottomRightGrid>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               7
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               8
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               9
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               4
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               5
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               6
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               1
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               2
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               3
             </SquareButton>
-            <SquareButton buttonType="hold" color="black">
+            <SquareButton buttonType="hold" color="black" onChange={onChangeScreenValue}>
               0
             </SquareButton>
-            <SquareButton buttonType="hold" color="red">
+            <SquareButton buttonType="hold" color="red" onChange={onChangeScreenValue}>
               КОН
             </SquareButton>
-            <SquareButton buttonType="hold" color="red">
+            <SquareButton buttonType="hold" color="red" onChange={onChangeScreenValue}>
               С
             </SquareButton>
           </KP5BottomRightGrid>

@@ -1,10 +1,12 @@
-import React, { ChangeEvent, FC } from 'react';
+import React, { ChangeEvent, FC, useEffect } from 'react';
 import styled from 'styled-components';
 
 interface ScreenProps {
   // eslint-disable-next-line react/require-default-props
   className?: string;
   value: string;
+  isActive: boolean
+  onChange: (value?: string) => void;
   setValue: (e: ChangeEvent) => void;
 }
 
@@ -13,9 +15,12 @@ const Input = styled.input`
   color: #00b600;
   background: transparent;
   font-weight: 700;
-  font-size: 20px;
   min-height: 40px;
   width: 100%;
+  text-align: center;
+  letter-spacing: 7px;
+  font-size: 30px;
+  padding-left: 7px;
 `;
 
 const StyledScreen = styled.div`
@@ -23,14 +28,20 @@ const StyledScreen = styled.div`
   border: 2px solid #c4c4c4;
 `;
 
-const DigitalScreen: FC<ScreenProps> = ({ className, value, setValue }) => {
+const DigitalScreen: FC<ScreenProps> = ({ className, value, setValue, onChange, isActive }) => {
+  const displayValue = isActive ? value : '';
+  const onChangeInput = (e: ChangeEvent) => {
+    const displayValue = isActive ? (e.target as HTMLInputElement).value : '';
+    onChange(displayValue)
+  }
   return (
     <StyledScreen className={className}>
       <Input
-        value={value}
+        value={displayValue}
         type="text"
         inputMode="numeric"
-        onChange={setValue}
+        onChange={onChangeInput}
+        maxLength={3}
       />
     </StyledScreen>
   );

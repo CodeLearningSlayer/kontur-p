@@ -16,6 +16,7 @@ const StyledButton = styled.button`
   border: none;
   background: #cecece;
   border-radius: 50%;
+  cursor: pointer;
 `;
 
 const ButtonInner = styled.div<{ $isActive: boolean }>`
@@ -36,22 +37,25 @@ const StyledImg = styled.img<{ $mouseHold: boolean }>`
   ${({ $mouseHold }) => ($mouseHold ? 'transform: scale(0.98)' : '')};
 `;
 
-const ButtonRound = ({ type }: { type: 'hold' | 'click' }) => {
+const ButtonRound = ({ type, onChange }: { type: 'hold' | 'click', onChange?: () => void }) => {
   const [mouseHold, setMouseHold] = useState(false);
 
   const onMouseDown = () => {
     if (!(type === 'hold')) return;
     setMouseHold(true);
+    onChange ? onChange() : () => {};
   };
 
   const onMouseUp = () => {
     if (!(type === 'hold')) return;
     setMouseHold(false);
+    onChange ? onChange() : () => {};
   };
 
   const onClick = () => {
     if (!(type === 'click')) return;
     setMouseHold((currValue) => !currValue);
+    onChange ? onChange() : () => {};
   };
 
   return (

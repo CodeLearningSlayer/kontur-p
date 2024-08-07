@@ -11,6 +11,7 @@ interface TumblerProps {
   className?: string;
   // eslint-disable-next-line react/require-default-props
   topCaption?: string;
+  onChange: () => void
 }
 
 const TumblerWrapper = styled.div`
@@ -28,8 +29,8 @@ const Button = styled.button`
   justify-content: center;
   filter: drop-shadow(2px 2px 4px);
   align-items: center;
-  margin: 0;
-  margin-bottom: -7px;
+  margin: 0 0 -7px;
+  cursor: pointer;
 `;
 
 const Tumbler: FC<TumblerProps> = ({
@@ -37,18 +38,17 @@ const Tumbler: FC<TumblerProps> = ({
   caption,
   topCaption,
   className,
+  onChange
 }) => {
-  const [tumblerState, setTumblerState] = useState(false);
+  const [tumblerState, setTumblerState] = useState(true);
 
   const onClick = () => {
     setTumblerState((state) => !state);
+    onChange();
   };
 
   const tumblerImg = useMemo(() => {
-    if (direction === 'horizontal') {
-      return tumblerState ? tumblerRight : tumblerLeft;
-    }
-    return tumblerState ? tumblerDown : tumblerUp;
+    return tumblerState ? tumblerUp : tumblerDown;
   }, [direction, tumblerState]);
 
   return (

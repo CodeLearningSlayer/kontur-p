@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer, IpcRendererEvent } from 'electron';
 
-export type Channels = 'ipc-example' | 'resize-window';
+export type Channels = 'ipc-example' | 'resize-window' | 'redirect';
 
 const electronHandler = {
   ipcRenderer: {
