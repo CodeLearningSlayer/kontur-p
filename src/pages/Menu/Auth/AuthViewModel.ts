@@ -39,12 +39,10 @@ export class AuthViewModel {
         troop: this._troop,
       });
       window.electron.ipcRenderer.sendAsyncMessage('redirect', '/menu')
-      /*
       await checkIfUserNew(this._name).then((result) => {
         if (!result) return
-        insertUser(this._name, this._course, this._troop)
+        //insertUser(this._name, this._course, this._troop)
       })
-      */
     }
   }
 
