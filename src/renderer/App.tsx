@@ -1,4 +1,4 @@
-import { Routes, Route, HashRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom';
 import './App.css';
 import React, { useState } from 'react';
 import Menu from '../pages/Menu/Menu';

@@ -31,7 +31,6 @@ const AuthElement = (props: {
 }): ReactElement => {
   const [vm] = useState(() => new AuthViewModel());
   const { setContextUser } = props;
-
   return (
     <StyledLayout>
       <StyledContent>

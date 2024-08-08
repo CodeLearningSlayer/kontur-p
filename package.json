@@ -1,4 +1,6 @@
 {
+  "name": "your-app-name",
+  "version": "1.0.0",
   "description": "A foundation for scalable desktop apps",
   "keywords": [
     "electron",
@@ -46,7 +48,8 @@
     "start:main": "cross-env NODE_ENV=development electronmon -r ts-node/register/transpile-only .",
     "start:preload": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack --config ./.erb/configs/webpack.config.preload.dev.ts",
     "start:renderer": "cross-env NODE_ENV=development TS_NODE_TRANSPILE_ONLY=true webpack serve --config ./.erb/configs/webpack.config.renderer.dev.ts",
-    "test": "jest"
+    "test": "jest",
+    "ttt": "electron-builder install-app-deps"
   },
   "browserslist": [],
   "prettier": {
@@ -193,21 +196,10 @@
       "node_modules",
       "package.json"
     ],
-    "mac": {
-      "sign": ".erb/scripts/notarize.js",
-      "notarize": false,
-      "target": {
-        "target": "default",
-        "arch": [
-          "arm64",
-          "x64"
-        ]
-      },
-      "type": "distribution",
-      "hardenedRuntime": true,
-      "entitlements": "assets/entitlements.mac.plist",
-      "entitlementsInherit": "assets/entitlements.mac.plist",
-      "gatekeeperAssess": false
+    "directories": {
+      "app": "release/app",
+      "buildResources": "assets",
+      "output": "release/build"
     },
     "dmg": {
       "contents": [
@@ -227,17 +219,6 @@
       "target": [
         "nsis"
       ]
-    },
-    "linux": {
-      "target": [
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "app": "release/app",
-      "buildResources": "assets",
-      "output": "release/build"
     },
     "extraResources": [
       "./assets/**"

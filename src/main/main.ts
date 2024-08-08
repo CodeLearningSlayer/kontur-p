@@ -87,7 +87,7 @@ const createWindow = async () => {
 
   ipcMain.on('redirect', (event, path) => {
     if (mainWindow instanceof BrowserWindow) {
-      mainWindow.loadURL(`http://localhost:1212/index.html#${path}`);
+      mainWindow.loadURL(resolveHtmlPath("index.html") + "#" + path)
     }
   })
 
@@ -119,6 +119,7 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
+/*
 export const db = (function createDbConnection() {
   const sqlite3 = require('sqlite3').verbose();
   const path = require('path');
@@ -142,6 +143,7 @@ export const db = (function createDbConnection() {
   });
   return db;
 })();
+*/
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
